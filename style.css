@@ -3,13 +3,11 @@ body {
 }
 
 .main-header {
-	width: 100%;
 	text-align: center;
 	font-size: 80px;
 }
 
 .main-links {
-	width: 100%;
 	text-align: center;
 	font-size: 30px;
 }
@@ -17,6 +15,10 @@ body {
 .page-header {
 	text-align: center;
 	font-size: 40px;
+}
+
+.projects-header {
+	width: 1300px;
 }
 
 .page-links {
