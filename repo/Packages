@@ -15,17 +15,17 @@ Author: Thomas Finch <tomf64@gmail.com>
 Name: Dim
 
 Package: com.thomasfinch.priorityhub
-Version: 1.2-176
+Version: 1.2-177
 Architecture: iphoneos-arm
 Maintainer: Thomas Finch <tomf64@gmail.com>
-Installed-Size: 252
+Installed-Size: 236
 Depends: mobilesubstrate, preferenceloader
 Conflicts: org.thebigboss.remindersforlockscreen, org.thebigboss.calendarsforlockscreen, com.lockinfo.lockinfo7
-Filename: .//com.thomasfinch.priorityhub_1.2-176_iphoneos-arm.deb
-Size: 56266
-MD5sum: 7393ea32d6f93a564b6f219bf4a698c4
-SHA1: 9985312a4c3da7b15a1efbc9b2a264c804b58a17
-SHA256: 6488ed0cfd12a057c743b16bb0cbc1bbff3725785597ecea3275b25e0b87d425
+Filename: .//com.thomasfinch.priorityhub_1.2-177_iphoneos-arm.deb
+Size: 55954
+MD5sum: 3673c325af296294ccd1884e5bb111d6
+SHA1: 1ee776cf7184b0bce0a2b92c9189e464f82bcdbd
+SHA256: 9df8d935d04899604942b87da51739efe9b8f79929ecd1443d05481242e6b336
 Section: Tweaks
 Homepage: http://thomasfinch.me
 Description: Organize your lockscreen notifications!
