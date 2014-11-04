@@ -1,0 +1,33 @@
+Package: com.thomasfinch.dim
+Version: 0.1-7
+Architecture: iphoneos-arm
+Maintainer: Thomas Finch
+Installed-Size: 248
+Depends: mobilesubstrate, libactivator
+Filename: .//com.thomasfinch.dim_0.1-7_iphoneos-arm.deb
+Size: 76628
+MD5sum: 44cc4f89db19583eee4fd7e3459d31d2
+SHA1: 8585a4b9752fab790b63231f9833dfe5919364e1
+SHA256: 9dc3f105bd19c9d80bfe4aa9bb48cc2cad5c498f1e56a417203289f57be2ddce
+Section: Tweaks
+Description: Dim your phone screen even further
+Author: Thomas Finch
+Name: Dim
+
+Package: com.thomasfinch.priorityhub
+Version: 1.2-175+debug
+Architecture: iphoneos-arm
+Maintainer: Thomas Finch
+Installed-Size: 308
+Depends: mobilesubstrate, preferenceloader
+Conflicts: org.thebigboss.remindersforlockscreen, org.thebigboss.calendarsforlockscreen, com.lockinfo.lockinfo7
+Filename: .//com.thomasfinch.priorityhub_1.2-175+debug_iphoneos-arm.deb
+Size: 79384
+MD5sum: da36637d0d059791415f268ab9c2d3dd
+SHA1: 4f6767bc7ec7b4be45c52e7ec2dd2e0d9a2c6ac0
+SHA256: 49779c6f3d5b8603a92765e862ffde920abdc397d04155e83f5df12ffaaca3dc
+Section: Tweaks
+Description: Organize your lockscreen notifications!
+Author: Thomas Finch
+Name: Priority Hub
+
