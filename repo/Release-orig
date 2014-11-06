@@ -1,8 +1,0 @@
-Origin: Thomas Finch's repo
-Label: thomasfinch
-Suite: stable
-Version: 0.9
-Codename: tangelo
-Architectures: iphoneos-arm
-Components: main
-Description: Betas & fun stuff from Thomas Finch
