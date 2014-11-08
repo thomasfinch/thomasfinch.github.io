@@ -4,7 +4,7 @@ Architecture: iphoneos-arm
 Maintainer: Thomas Finch <tomf64@gmail.com>
 Installed-Size: 248
 Depends: mobilesubstrate, libactivator
-Filename: ./com.thomasfinch.dim_0.1-8_iphoneos-arm.deb
+Filename: .//com.thomasfinch.dim_0.1-8_iphoneos-arm.deb
 Size: 76640
 MD5sum: 738e178f8fa6841b38e561744b4724ce
 SHA1: ebcb216ec0163163105997544adae020752017da
@@ -15,17 +15,17 @@ Author: Thomas Finch <tomf64@gmail.com>
 Name: Dim
 
 Package: com.thomasfinch.priorityhub
-Version: 1.2-214
+Version: 1.2-223
 Architecture: iphoneos-arm
 Maintainer: Thomas Finch <tomf64@gmail.com>
 Installed-Size: 256
 Depends: mobilesubstrate, preferenceloader
 Conflicts: com.lockinfo.lockinfo7
-Filename: ./com.thomasfinch.priorityhub_1.2-214_iphoneos-arm.deb
-Size: 57624
-MD5sum: 7b4eab2271b74d6b3f5a629de8f74dfb
-SHA1: 55707afdf2168710a1d3105eddd4354cb720cabe
-SHA256: a2fd0051691c76e573e53dbfb44c06b0351c8df1a9267d44b1ac4b5571b82586
+Filename: .//com.thomasfinch.priorityhub_1.2-223_iphoneos-arm.deb
+Size: 58662
+MD5sum: 0c7985617728fc74e4842f7b23834801
+SHA1: 54e9edafd29f045f87b626085946a1d828c3c6d6
+SHA256: 8945910a755df32626910f9c46ca528afef7006bb4ba1f779a4c44081fb18f46
 Section: Tweaks
 Homepage: http://thomasfinch.me
 Description: Organize your lockscreen notifications!
