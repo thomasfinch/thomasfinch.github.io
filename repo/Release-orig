@@ -1,0 +1,8 @@
+Origin: Thomas Finch's repo
+Label: thomasfinch
+Suite: stable
+Version: 1.0
+Codename: cydia
+Architectures: iphoneos-arm
+Components: main
+Description: Betas & fun stuff from Thomas Finch
