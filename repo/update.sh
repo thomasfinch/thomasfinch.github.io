@@ -1,6 +1,6 @@
 #Generate the Packages and Packages.bz2 files
 dpkg-scanpackages -m . /dev/null > Packages
-bzip2 Packages
+bzip2 -f Packages
 
 #Get MD5 hashes of Packages and Packages.bz2, and put that info at the end of the release file
 # PACKAGES_SIZE=$(stat -f%z Packages)
@@ -13,4 +13,4 @@ bzip2 Packages
 
 #Sign the release file
 # rm -f Release.gpg
-# gpg -abs -o Release.gpg Release
+gpg -abs -o Release.gpg Release
