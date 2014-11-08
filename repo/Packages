@@ -4,7 +4,7 @@ Architecture: iphoneos-arm
 Maintainer: Thomas Finch <tomf64@gmail.com>
 Installed-Size: 248
 Depends: mobilesubstrate, libactivator
-Filename: .//com.thomasfinch.dim_0.1-8_iphoneos-arm.deb
+Filename: com.thomasfinch.dim_0.1-8_iphoneos-arm.deb
 Size: 76640
 MD5sum: 738e178f8fa6841b38e561744b4724ce
 SHA1: ebcb216ec0163163105997544adae020752017da
@@ -21,7 +21,7 @@ Maintainer: Thomas Finch <tomf64@gmail.com>
 Installed-Size: 256
 Depends: mobilesubstrate, preferenceloader
 Conflicts: com.lockinfo.lockinfo7
-Filename: .//com.thomasfinch.priorityhub_1.2-214_iphoneos-arm.deb
+Filename: com.thomasfinch.priorityhub_1.2-214_iphoneos-arm.deb
 Size: 57624
 MD5sum: 7b4eab2271b74d6b3f5a629de8f74dfb
 SHA1: 55707afdf2168710a1d3105eddd4354cb720cabe
