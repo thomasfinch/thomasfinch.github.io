@@ -70,6 +70,17 @@ body {
 	float: center;
 }
 
+.noscreenshot-description {
+	float: center;
+	display: inline-block;
+	width: 300px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 30px;
+	padding-right: 30px;
+	vertical-align: top;
+}
+
 .description-header {
 	height: 70px;
 	text-align: center;
