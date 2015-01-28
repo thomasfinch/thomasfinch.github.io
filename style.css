@@ -116,3 +116,7 @@ a:link {
 a:visited {
 	color: #0000FF;
 }
+
+a:hover {
+    text-decoration: underline;
+}
