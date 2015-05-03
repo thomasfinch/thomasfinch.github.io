@@ -5,4 +5,4 @@ Files for my website
 
 Why are you even looking at this
 
-Feel free to steal my layout/design/whatever
+Feel free to use my layout/design/whatever (MIT license)
