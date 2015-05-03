@@ -1,23 +1,16 @@
 <html>
 <head>
 	<title>Thomas Finch</title>
+	<title>Thomas Finch - Projects</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="../jquery-2.1.3.min.js"></script> 
+    <script> 
+	    $(function(){
+	      $("#content").load("projects/index.html"); 
+	    });
+    </script>
 </head>
 
-<body>
-
-	<br /><br /><br /><br /><br /><br />
-
-	<div class='main-header'>Thomas Finch</div>
-	<br />
-	<div class='main-links'>
-		<a href="/projects/">Projects</a> &nbsp;&nbsp; | &nbsp;&nbsp; 
-		<a href="https://twitter.com/tomf64">Twitter</a> &nbsp;&nbsp; | &nbsp;&nbsp; 
-		<a href="https://github.com/thomasfinch">GitHub</a> &nbsp;&nbsp; | &nbsp;&nbsp;
-		<a href="/contact/">Contact</a> &nbsp;&nbsp; | &nbsp;&nbsp;
-		<a href="/about/">About</a>
-	</div>
-
-</body>
+<div id="content"></div>
 
 </html>
