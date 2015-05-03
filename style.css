@@ -1,5 +1,5 @@
 body {
-	font-family: "Arial";
+	font-family: "Helvetica";
 }
 
 .footer {
@@ -13,7 +13,7 @@ body {
 
 .page-header {
 	text-align: center;
-	font-size: 45px;
+	font-size: 55px;
 	width: 100%;
 	padding-top: 40px;
 }
