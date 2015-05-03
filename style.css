@@ -11,20 +11,11 @@ body {
 	margin-right: auto;
 }
 
-.main-header {
-	text-align: center;
-	font-size: 80px;
-}
-
-.main-links {
-	text-align: center;
-	font-size: 30px;
-}
-
 .page-header {
 	text-align: center;
-	font-size: 40px;
+	font-size: 45px;
 	width: 100%;
+	padding-top: 40px;
 }
 
 .page-accounts {
@@ -46,8 +37,8 @@ svg:hover path {
 
 .page-links {
 	text-align: center;
-	font-size: 22px;
-	padding-bottom: 50px;
+	font-size: 25px;
+	padding-bottom: 60px;
 }
 
 .about-paragraph {
