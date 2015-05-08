@@ -1,7 +1,7 @@
 var fs = require('fs');
 var marked = require('marked');
 
-//Get a list of all markdown files in this directory
+//Get a list of all markdown files in the posts directory
 var markdownFiles = fs.readdirSync('./posts/').filter(function(file){ return (file.indexOf('.md') != -1); });
 
 //Set up the CSS and javascript to put at the top of each generated HTML page

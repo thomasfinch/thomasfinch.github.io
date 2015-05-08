@@ -13,7 +13,7 @@ I thought initially that the whole idea of non-random shuffling was ridiculous s
 However, given the long list of users convinced that shuffling wasn't random and the fact that Apple had experimented with non-random shuffling at least once in the past, I felt that the question was worthy of more investigation.
 
 
-### Diggig Deeper
+### Digging Deeper
 Since the Reddit commenter specifically mentioned iPods as having a weighted shuffle algorithm, I tested the myth with their slightly more modern equivalent, the iPhone. Though I could have shuffled a list of songs repeatedly and recorded their order each time, the much more conclusive (and fun) way to figure out if the iPhone's music app weights shuffling is to reverse engineer it.
 
 Here's a list of tools I used:
@@ -26,4 +26,18 @@ Here's a list of tools I used:
 
 One of the best tools to start out with when reverse engineering Objective-C is ```class-dump-z``` (or its predecessor, ```class-dump```). ```Class-dump-z``` is able to create pseudo-header files for each class in a binary file based on the class and method information within the file. Thankfully the naming conventions/traditions of Objective-C tend to lead to verbose method names, meaning that it's usually easy to guess what a given method does.
 
-To run ```class-dump-z``` on the music app binary, I first copied it from my phone (located at ```/Applications/Music.app/Music```) to my computer. Thankfully, the app was not encrypted like App Store apps are. If it was, it could have been decrypted using Stefan Esser's handy [dumpdecrypted](https://github.com/stefanesser/dumpdecrypted) tool.
+To run ```class-dump-z``` on the music app binary, I first copied it from my phone (located at ```/Applications/Music.app/Music```) to my computer. Thankfully, the app was not encrypted like App Store apps are. If it was, it could have been decrypted using Stefan Esser's handy [dumpdecrypted](https://github.com/stefanesser/dumpdecrypted) tool. [Write out the process of running class-dump-z]
+
+[Show how there are no methods or classes in the music binary related to shuffling -> shuffling must be done somewhere else (in a framework used by the music app)]
+
+[The only logical framework for it to be in is the MediaPlayer framework -> show how to extract it with jtool -> class-dump it -> look for shuffling methods -> find the one shuffle method that looks promising]
+
+[Let's figure out how this method works! -> open in Hopper -> Oh noes it's been stripped!!! can't look up methods by name!  wat now????]
+
+[Only one thing to do: LLDB. Set up debugserver to connect to the Music app and connect to it from computer. Can now debug phone music app from mac. Set breakpoint on the shuffle method and tap the shuffle button at the top of the app -> breakpoint is hit! We now know that our method is somehow involved in the shuffle process.]
+
+[Now debugging inside the method we're interested in. We know it has two arguments, let's look at them. (print $arg1 and $arg2 -> nsmutablearray of songSomething objects and unsigned integer initialIndex). Strong evidence that we're in the right place.]
+
+[So what happens inside the function? disas! -> We have assembly! It's pretty simple to reverse engineer, but we also have pseudocode from the armv6 version using Hopper (assembly looks almost identical (other than armv6/arm64 differences) so pseudocode is pretty helpful).]
+
+
