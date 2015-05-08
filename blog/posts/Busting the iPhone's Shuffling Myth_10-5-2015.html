@@ -27,6 +27,11 @@ However, given the long list of users convinced that shuffling wasn&#39;t random
 <p>[Show how there are no methods or classes in the music binary related to shuffling -&gt; shuffling must be done somewhere else (in a framework used by the music app)]</p>
 <p>[The only logical framework for it to be in is the MediaPlayer framework -&gt; show how to extract it with jtool -&gt; class-dump it -&gt; look for shuffling methods -&gt; find the one shuffle method that looks promising]</p>
 <p>[Let&#39;s figure out how this method works! -&gt; open in Hopper -&gt; Oh noes it&#39;s been stripped!!! can&#39;t look up methods by name!  wat now????]</p>
+<h3 id="lldb-to-the-rescue">LLDB to the Rescue</h3>
 <p>[Only one thing to do: LLDB. Set up debugserver to connect to the Music app and connect to it from computer. Can now debug phone music app from mac. Set breakpoint on the shuffle method and tap the shuffle button at the top of the app -&gt; breakpoint is hit! We now know that our method is somehow involved in the shuffle process.]</p>
 <p>[Now debugging inside the method we&#39;re interested in. We know it has two arguments, let&#39;s look at them. (print $arg1 and $arg2 -&gt; nsmutablearray of songSomething objects and unsigned integer initialIndex). Strong evidence that we&#39;re in the right place.]</p>
 <p>[So what happens inside the function? disas! -&gt; We have assembly! It&#39;s pretty simple to reverse engineer, but we also have pseudocode from the armv6 version using Hopper (assembly looks almost identical (other than armv6/arm64 differences) so pseudocode is pretty helpful).]</p>
+<h3 id="analyzing-the-shuffle-method">Analyzing the Shuffle Method</h3>
+<p>[We have assembly from LLDB for the arm64 version. Also have assembly + pseudocode for the armv6 version.]</p>
+<p>[Assembly for armv6 &amp; arm64 versions look almost identical other than obvious changes like register names etc. Most likely the original code is identical for both, meaning the armv6 pseudocode is useful.]</p>
+<p>[Based on the armv6 pseudocode the function is pretty straightforward. The only problem is that we don&#39;t know what methods are called, we can only see that an objc_msgSend call was made.]</p>

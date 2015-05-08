@@ -34,10 +34,20 @@ To run ```class-dump-z``` on the music app binary, I first copied it from my pho
 
 [Let's figure out how this method works! -> open in Hopper -> Oh noes it's been stripped!!! can't look up methods by name!  wat now????]
 
+### LLDB to the Rescue
+
 [Only one thing to do: LLDB. Set up debugserver to connect to the Music app and connect to it from computer. Can now debug phone music app from mac. Set breakpoint on the shuffle method and tap the shuffle button at the top of the app -> breakpoint is hit! We now know that our method is somehow involved in the shuffle process.]
 
 [Now debugging inside the method we're interested in. We know it has two arguments, let's look at them. (print $arg1 and $arg2 -> nsmutablearray of songSomething objects and unsigned integer initialIndex). Strong evidence that we're in the right place.]
 
 [So what happens inside the function? disas! -> We have assembly! It's pretty simple to reverse engineer, but we also have pseudocode from the armv6 version using Hopper (assembly looks almost identical (other than armv6/arm64 differences) so pseudocode is pretty helpful).]
 
+[We're almost done with LLDB, but not yet. We can see several calls to objc_msgSend but can't see exactly what they are. Can either set breakpoints on objc_msgSend (gross & tedious but it works) or can print the selecors at the given addresses]
 
+### Analyzing the Shuffle Method
+
+[We have assembly from LLDB for the arm64 version. Also have assembly + pseudocode for the armv6 version.]
+
+[Assembly for armv6 & arm64 versions look almost identical other than obvious changes like register names etc. Most likely the original code is identical for both, meaning the armv6 pseudocode is useful.]
+
+[Based on the armv6 pseudocode the function is pretty straightforward. The only problem is that we don't know what methods are called, we can only see that an objc_msgSend call was made.]
