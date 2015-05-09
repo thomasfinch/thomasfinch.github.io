@@ -32,7 +32,7 @@
 
 .noscreenshot-description {
 	float: center;
-	display: inline-block;
+	display: inline;
 	width: 300px;
 	margin-left: auto;
 	margin-right: auto;
@@ -44,20 +44,26 @@
 .description-header {
 	height: 70px;
 	text-align: center;
+	padding-top: 30px;
 }
 
 .description-icon {
 	float: center;
 	width: 45px;
-	display: inline-block;
+	height: 45px;
+	display: inline;
 	vertical-align: middle;
+	margin: auto;
 }
 
 .description-heading {
 	float: center;
+	height: 40px;
 	display: inline-block;
 	vertical-align: middle;
 	padding-left: 10px;
+	margin-top: auto;
+	margin-bottom: auto;
 }
 
 .description-block {
