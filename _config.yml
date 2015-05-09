@@ -3,7 +3,7 @@ title: Thomas Finch
 email: tomf64@gmail.com
 description: ""
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://localhost:4000" # the base hostname & protocol for your site
+url: "http://thomasfinch.me" # the base hostname & protocol for your site
 twitter_username: tomf64
 github_username:  thomasfinch
 
