@@ -8,4 +8,4 @@ twitter_username: tomf64
 github_username:  thomasfinch
 
 # Build settings
-markdown: kramdown
+markdown: redcarpet
