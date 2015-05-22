@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Busting the iPhone's Shuffling Myth"
-date:   2015-05-09 12:42:37
-categories: reverse-engineering iOS jailbreak security
+date:   2015-05-09 12:00:00
+categories: blog
 ---
 
 Last week I happened across [an interesting Reddit post](http://www.reddit.com/r/explainlikeimfive/comments/34hnnj/eli5_despite_having_150_songs_on_a_playlist/). In it, the poster asks why the same songs seem to keep coming up when shuffling a music library on iTunes.
