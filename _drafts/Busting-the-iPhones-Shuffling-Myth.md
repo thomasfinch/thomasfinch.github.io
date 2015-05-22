@@ -62,7 +62,7 @@ UITabBarControllerDelegate-Protocol.h
 
 Browsing through these generated headers gives us information about the classes in the music app, like each class's superclass, properties, and methods. However, none of the classes in the app seem to relate to shuffling. If this list seems incredibly short, well, it is. The music app is a full, functioning app! Where are all of the user interface classes? Searching the all the generated header files shows that none of them contain "shuffle". Where are the classes controlling stuff like shuffling? Fortunately the interface classes are easy to track down, and give us a hint toward where to look for the shuffling code.
 
-<div style="text-align:center"><img src ="http://i.imgur.com/137bOyw.png" /><br /><em>Even the world's greatest detective can't find those missing classes</em><br /><br /></div>
+<div style="text-align:center"><img src ="http://i.imgur.com/fz35mDJ.png" /><br /><em>Even the world's greatest detective can't find those missing classes</em><br /><br /></div>
 
 ### Cycript (need a better name for this section)
 
