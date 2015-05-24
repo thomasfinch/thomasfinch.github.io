@@ -40,8 +40,24 @@ These variables can be entered in a project's makefile.
 * __GDB/LLDB__ - I haven't used a debugger for fixing bugs in my tweaks before, but I find them useful for doing research into how different methods work within apps. The version of GDB hosted by Saurik doesn't work for me, although I was able to find an older version online that does. I would recommend setting up LLDB for remote debugging by following [iPhoneDevWiki's instructions](http://iphonedevwiki.net/index.php/Debugserver).
 * [iOS Simulator](http://sharedinstance.net/2013/10/running-tweaks-in-simulator/) - You can in fact run jailbreak tweaks in the iOS simulator. It takes a bit of work and probably isn't worth your time if you have a jailbroken device available, but if you don't then it could be very useful. I used it to mess around with tweaking iOS 7 before a public jailbreak was released.
 
+## Apple Service Code Names
+* Madrid = iMessage (iOS 5 only, now part of ChatKit) ([iPhoneDevWiki](http://iphonedevwiki.net/index.php/ChatKit.framework))
+* Castle = iCloud (try running `[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=CASTLE"]]` with cycript)
+* Victoria = Nike + iPod feature ([TheiPhoneWiki](https://www.theiphonewiki.com/wiki/Victoria))
+
 ## Other Tips
 * If you want to force another tweak to load before yours, you can use `dlopen` to force its dylib to be loaded first. For example, I use the line `dlopen("/Library/MobileSubstrate/DynamicLibraries/SubtleLock.dylib", RTLD_NOW);` in Priority Hub's constructor to force SubtleLock to be loaded first, so that Priority Hub can have the final say in the layout of a few views. Normally `dlopen` is used to load dynamic libraries so functions within them can be used, but forcing tweaks to load is another side effect/feature.
+* __Message logging in tweaks__ - It can be useful to log information to the device's system log for debugging purposes. However, it can sometimes be annoying to have the logs in final versions of tweaks because they can fill the system log and make it hard for other developers to find their messages. One way to avoid this is to define a macro with your own log function. In Priority Hub, I named this PHLog, so I can call `PHLog(@"Preparing for teardown!");` and it will be logged as `PRIORITY HUB [Line 255]: Preparing for teardown!`. PHLog can be called identically to NSLog, including arguments and format specifiers. This is done by using the macro: 
+
+```
+#ifdef DEBUG
+	#define PHLog(fmt, ...) NSLog((@"PRIORITY HUB [Line %d]: " fmt), __LINE__, ##__VA_ARGS__)
+#else
+	#define PHLog(...)
+#endif
+```
+Inside in a Prefix.pch file and included in all project files by adding the line `PriorityHub_CFLAGS = -include Prefix.pch` to the makefile. Then, I can comment out or uncomment the line `DEBUG = 1` in the makefile to instantly enable or disable all print statements in Priority Hub.
+
 * Look at code for open source projects! There are tons of open source tweaks that can be found through Google or on [iPhoneDevWiki's list of open source projects](http://iphonedevwiki.net/index.php/Open_Source_Projects). If you're stuck on a problem, maybe someone has solved it before. I try to open source as many of my tweaks as possible so others can learn from them, you can check them out [here](https://github.com/thomasfinch?tab=repositories).
 * Ask for help! There are plenty of good places to ask for help from other developers, like [/r/JailbreakDevelopers](http://www.reddit.com/r/jailbreakdevelopers) or Saurik's IRC server or even by contacting other developers directly through Twitter or email. Even if you don't need help, you can learn a lot from hanging around and reading.
 
