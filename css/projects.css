@@ -58,6 +58,7 @@
 }
 
 .description-links-container {
+	margin-top: 15px;
 	text-align: center;
 }
 
@@ -65,4 +66,9 @@
 	text-align: center;
 	float: center;
 	display: inline-block;
+}
+
+.external-link-image {
+	max-width: 30px;
+	max-height: 30px;
 }
