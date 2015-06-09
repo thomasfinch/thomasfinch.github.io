@@ -60,3 +60,9 @@
 .description-links-container {
 	text-align: center;
 }
+
+.external-link {
+	text-align: center;
+	float: center;
+	display: inline-block;
+}
