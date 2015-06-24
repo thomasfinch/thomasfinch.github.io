@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Busting the iPhone's Shuffling Myth"
+title:  "Introduction to Reverse Engineering on iOS: Busting the Shuffling Myth"
 date:   2015-05-09 12:00:00
 categories: blog
 ---
@@ -18,20 +18,20 @@ I thought initially that the whole idea of non-random shuffling was ridiculous s
 However, given the long list of users convinced that shuffling wasn't random and the fact that Apple had experimented with non-random shuffling at least once in the past, I felt that the question was worthy of more investigation.
 
 ### Diving In
-Since the Reddit commenter specifically mentioned iPods as having a weighted shuffle algorithm, testing the myth with their slightly more modern equivalent, the iPhone, makes sense. Though shuffling a list of songs repeatedly and recording their order each time could work, the much more conclusive (and fun) way to figure out if the iPhone's music app weights shuffling is to reverse engineer it.
+Since the Reddit commenter specifically mentioned iPods as having a weighted shuffle algorithm, testing the myth with their slightly more modern equivalent, iOS devices, makes sense. Though shuffling a list of songs repeatedly and recording their order each time could work, the much more conclusive (and fun) way to figure out if the iPhone's music app weights shuffling is to reverse engineer it.
 
 Here's a list of tools used:
 
-* A jailbroken iPhone (in my case, a 5s on iOS 8.1.2)
+* A jailbroken iOS device (in my case, an iPhone 5s on iOS 8.3)
 * [Class-Dump](http://stevenygard.com/projects/class-dump/) - Extracts class and method information for Objective-C programs
 * [Cycript](http://www.cycript.org) - Handy runtime analysis tool that allows interacting with running Objective-C using JavaScript syntax
-* [OTool](http://www.manpagez.com/man/1/otool/) - Object file analysis tool
-* [Hopper Disassembler](http://www.hopperapp.com) - Graphical disassembler
+* [OTool](http://www.manpagez.com/man/1/otool/) - Mach-O executable analysis tool
 * [LLDB](http://lldb.llvm.org) - General purpose debugger
+* [Hopper Disassembler](http://www.hopperapp.com) - Graphical disassembler
 
-One of the best tools to start out with when reverse engineering Objective-C is class-dump. Class-dump is able to create pseudo-header files for each class in a binary file based on the runtime information within Mach-O files. Thankfully the naming conventions/traditions of Objective-C tend to lead to verbose method names, meaning that it's usually easy to guess what a given method does.
+One of the best tools to start out with when reverse engineering Objective-C is class-dump. Class-dump is able to create pseudo-header files for each class in a binary file based on the runtime information within Mach-O executable files. Thankfully the naming conventions/traditions of Objective-C tend to lead to verbose method names, meaning that it's usually easy to guess what a given method does.
 
-To run class-dump on the music app binary, I first copied it from my phone (located at /Applications/Music.app/Music) to my computer. Thankfully, the app is not encrypted like App Store apps are. If it was, it could have been decrypted using Stefan Esser's handy [dumpdecrypted](https://github.com/stefanesser/dumpdecrypted) tool.
+To run class-dump on the music app binary, I first copied it from my phone (located at /Applications/Music.app/Music) to my computer. Fortunately, the app is not encrypted like App Store apps are. If it was, it could have been decrypted using Stefan Esser's handy [dumpdecrypted](https://github.com/stefanesser/dumpdecrypted) tool.
 
 Here's the process of running class-dump:
 
@@ -59,7 +59,7 @@ UINavigationControllerDelegate-Protocol.h
 UITabBarControllerDelegate-Protocol.h
 ```
 
-Browsing through these generated headers gives us information about the classes in the music app, like each class's superclass, properties, and methods. However, none of the classes in the app seem to relate to shuffling. If this list seems incredibly short, well, it is. The music app is a full, functioning app! Where are all of the user interface classes? Searching the all the generated header files shows that none of them contain "shuffle". Where are the classes controlling stuff like shuffling? Fortunately the user interface classes are easy to track down, and give us a hint toward where to look for the shuffling code.
+Browsing through these generated headers gives us information about the classes in the music app, like each class's superclass, properties, and methods. If this list seems incredibly short, well, it is. Most applications as complex as the music app have dozens if not hundreds of classes in them. The music app is a full, functioning app! Where are all of the user interface classes? Searching the all the generated header files shows that none of them contain the string "shuffle". Where are the classes controlling  shuffling? Fortunately the user interface classes are easy to track down, and give us a hint toward where to look for the shuffling code.
 
 ### Cycript
 
@@ -74,7 +74,7 @@ cy# UIApp.keyWindow
 "<UIWindow: 0x14e53c890; frame = (0 0; 320 568); gestureRecognizers = <NSArray: 0x174446480>; layer = <UIWindowLayer: 0x170422080>>"
 ```
 
-After SSH-ing into my phone (in this case [through a USB connection](http://iphonedevwiki.net/index.php/SSH_Over_USB)) and connecting Cycript to the music app process, I can do practically anything within the app. With the above commands, we can see the shared UIApplication instance (MAApplication, also found in the class-dumped header files) as well as the key window. Omitting some subview exploration, we get the following:
+After SSH-ing into my phone (in this case [through a USB connection](http://iphonedevwiki.net/index.php/SSH_Over_USB)) and connecting Cycript to the music app process, I can do practically anything within the app. With the above commands, we can see the shared UIApplication instance (MAApplication, as expected from the class-dumped header files) as well as the key window. Omitting some subview exploration, we get the following:
 
 ```bash
 cy# UIApp.keyWindow.subviews[0].subviews[0].subviews[0].subviews[0].subviews[0].subviews[0].subviews[0].subviews[0].subviews
@@ -85,7 +85,7 @@ cy# UIApp.keyWindow.subviews[0].subviews[0].subviews[0].subviews[0].subviews[0].
 "<_UILayoutGuide: 0x1703a6820; frame = (0 0; 0 64); hidden = YES; layer = <CALayer: 0x170639e00>>"]
 ```
 
-Now we're getting somewhere! Googling any of the first four view classes turns up results from GitHub repositories of class-dumped iOS frameworks. Specifically, they seem to belong to the private [MediaPlayerUI framework](https://github.com/MP0w/iOS-Headers/tree/master/iOS8.1/PrivateFrameworks/MediaPlayerUI). Browsing through the framework's headers shows that it's exclusively interface code (it *does* have UI in its name after all). However, since the music app uses an external framework for its user interface it's a good clue that looking for the shuffling code in an external framework is a reasonable idea.
+Now we're getting somewhere! Googling any of the first four view classes turns up results from GitHub repositories of class-dumped iOS frameworks. Specifically, the classes belong to the private [MediaPlayerUI framework](https://github.com/MP0w/iOS-Headers/tree/master/iOS8.1/PrivateFrameworks/MediaPlayerUI). Browsing through the framework's headers shows that it's exclusively interface code (it *does* have UI in its name after all). However, since the music app uses an external framework for its user interface it's a hint that looking for the shuffling code in an external framework is a reasonable idea.
 
 We can list all shared libraries used in the music app using OTool:
 
@@ -113,13 +113,29 @@ Music:
 	/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation (compatibility version 150.0.0, current version 1141.15.0)
 ```
 
-As expected we see that the MediaPlayerUI framework is used, along with other common frameworks like Foundation and UIKit. Of the listed frameworks, the public [MediaPlayer framework](https://github.com/MP0w/iOS-Headers/tree/master/iOS8.1/Frameworks/MediaPlayer) seems promising - it's made for developers to control music playback, including playback from the built in music library (you can read Apple's official documentation of it [here](https://developer.apple.com/library/ios/documentation/MediaPlayer/Reference/MediaPlayer_Framework/index.html)). In addition the class-dumped headers for MediaPlayer have four classes with "shuffle" in their names, which is a big clue that the framework is related to shuffling in some capacity. From here we can start investigating methods that look promising, but I'll skip the trial and error and say that the one doing the shuffling is `MPMediaQueryShuffledItems - (void)shuffleItemsWithInitialIndex:(unsigned int)index`. Now we can start figuring out how it works.
+As expected we see that the MediaPlayerUI framework is used, along with other common frameworks like Foundation and UIKit. Of the listed frameworks, the public [MediaPlayer framework](https://github.com/MP0w/iOS-Headers/tree/master/iOS8.1/Frameworks/MediaPlayer) seems promising - it's made for developers to control music playback, including playback from the local music library (you can read Apple's official documentation of it [here](https://developer.apple.com/library/ios/documentation/MediaPlayer/Reference/MediaPlayer_Framework/index.html)). In addition the class-dumped headers for MediaPlayer have four classes with "shuffle" in their names, which is a big clue that the framework is related to shuffling in some capacity. From here we can start investigating methods that look promising, but I'll skip the trial and error and claim that the one doing the shuffling is `MPMediaQueryShuffledItems - (void)shuffleItemsWithInitialIndex:(unsigned int)index`. You don't have to take my word for it though, since we can prove it's the correct method using LLDB.
+
+### LLDB
+
+[Set up debugserver - http://iphonedevwiki.net/index.php/Debugserver]
+
+
+[Prove this in lldb. Break on the method, show it's called when shuffle is pressed, show that we can predict which song is shuffled to first]
+
+
+### Analysis of the method
+
+Normally I would analyze a method in a disassembler like Hopper Disassembler or [IDA Pro](https://www.hex-rays.com/products/ida/). However, Apple has stripped the symbols from the iOS 8 version of the MediaPlayer framework binary. 
+
+
+[Get disassembly from lldb. Possible to analyze like this, but takes time. Easier to generate pseudocode. Get armv6 assembly and pseudocode, show that armv6 and arm64 assembly are basically identical, therefore the pseudocode is useful. We can tell for the most part what the method does, but need to clear up some specifics like what the objc_msgSend calls are. Can either set breakpoints on objc_msgSend (gross & tedious but it works) or can print the selecors at the given addresses. Use LLDB to find this out. Show cleaned up, commented pseudocode.]
+
 
 ### Hopper
 
 In order to find out specifically how the shuffle method works we need to disassemble it. My first choice for disassembly is a graphical disassembler like Hopper Disassembler (or [IDA Pro](https://www.hex-rays.com/products/ida/)). To check out the shuffle method in Hopper, we first have to retrieve the binary for the MediaPlayer framework. A logical place to look on a jailbroken iOS device would be /System/Library/Frameworks/*.framework, but all of the framework folders are confusingly missing their main executables. As explained by [this iPhoneDevWiki article](http://iphonedevwiki.net/index.php/Dyld_shared_cache), all frameworks on iOS are combined in a big file called the DYLD shared cache to improve performance. After downloading the shared cache from a jailbroken phone (located at  /System/Library/Caches/com.apple.dyld/dyld\_shared\_cache_armX, where X = 64 in my case), we can open the cache file in Hopper Disassembler and select the MediaPlayer framework to start disassembly. Uh oh...
 
-<div style="text-align:center"><img src ="http://i.imgur.com/yI6lTG2.png" /><br /><em>The stripped MediaPlayer framework binary in Hopper</em><br /><br /></div>
+<div style="text-align:center"><img src ="http://i.imgur.com/yI6lTG2.png" /><br /><em>The stripped iOS 8 MediaPlayer framework binary in Hopper</em><br /><br /></div>
 
 Upon opening the file we're met with an enormous list of methods simply named \<redacted>. Apple has stripped the binary, meaning they removed all of the method names and other useful symbols from the program's symbol table. This is bad news for us because we can't easily locate the shuffle method within the binary, searching for it turns up nothing. In other words, the code we're looking for is in there but we don't know where.
 
@@ -134,11 +150,3 @@ At this point, there's only one tool that makes sense: a debugger. There is a ve
 [So what happens inside the function? disas! -> We have assembly! It's pretty simple to reverse engineer, but we also have pseudocode from the armv6 version using Hopper (assembly looks almost identical (other than armv6/arm64 differences) so pseudocode is pretty helpful).]
 
 [We're almost done with LLDB, but not yet. We can see several calls to objc_msgSend but can't see exactly what they are. Can either set breakpoints on objc_msgSend (gross & tedious but it works) or can print the selecors at the given addresses]
-
-### Analyzing the Shuffle Method
-
-[We have assembly from LLDB for the arm64 version. Also have assembly + pseudocode for the armv6 version.]
-
-[Assembly for armv6 & arm64 versions look almost identical other than obvious changes like register names etc. Most likely the original code is identical for both, meaning the armv6 pseudocode is useful.]
-
-[Based on the armv6 pseudocode the function is pretty straightforward. The only problem is that we don't know what methods are called, we can only see that an objc_msgSend call was made.]
