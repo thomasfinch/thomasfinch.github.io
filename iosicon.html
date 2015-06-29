@@ -36,7 +36,7 @@ function imageIsLoaded(e) {
         //Put the image data in the image views
         $('#icon').attr('src', e.target.result);
 	    $('#realIcon').attr('src', e.target.result);
-	    // $('#icon').css('visibility', 'visible');
+	    $('#icon').css('visibility', 'visible');
 
 	    //Draw image and mask in canvas
 	 	var canvas = document.getElementById('iconCanvas');
@@ -44,6 +44,9 @@ function imageIsLoaded(e) {
 		ctx.drawImage(document.getElementById('svg'), 0, 0, imageWidth, imageHeight);
 		ctx.globalCompositeOperation = 'source-atop';
 		ctx.drawImage(document.getElementById('realIcon'), 0, 0);
+
+		var canvas = document.getElementById('iconCanvas');
+    	document.getElementById('link').href=canvas.toDataURL("image/png");
     };
     img.src = e.target.result;
 };
@@ -51,17 +54,14 @@ function imageIsLoaded(e) {
 $(function() { 
     $("#downloadButton").click(function() {
 
-    	console.log($('#icon').attr('src'));
-
     	if ($('#icon').attr('src') === '' || $('#realIcon').attr('src') === '') {
     		alert('Please upload an image.');
     		return;
     	}
 
     	var canvas = document.getElementById('iconCanvas');
-    	var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-    	console.log(image);
-    	window.location.href = image;
+    	var imageURL = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    	window.location.href = imageURL;
     });
 });
 </script>
@@ -87,12 +87,14 @@ $(function() {
 
 <img id='icon' class='app-icon' src='' alt='Icon image' style='max-width:300px; max-height:300px; visibility:hidden;' />
 
+<img id='realIcon' class='app-icon' src='' style='display:none;' />
+
+<img id='svg' src='{{ site.url }}/resources/icongenerator/ios7-icon.svg' style='display:none;' />
+
+<canvas id='iconCanvas' width=2000 height=2000 style='display:none;' /></canvas>
+
 <br /><br />
 
-<img id='realIcon' class='app-icon' src=''/>
+<a id='link' href='' download='RoundedIcon.png'>Download Masked Icon</a>
 
-<img id='svg' src='{{ site.url }}/resources/icongenerator/ios7-icon.svg' />
-
-<canvas id='iconCanvas' width=2000 height=2000 ></canvas>
-
-<button id='downloadButton'>Download Masked Icon</button>
+<button id='downloadButton'>Download Masked Icon (full resolution)</button>
