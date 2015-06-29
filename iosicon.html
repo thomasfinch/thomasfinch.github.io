@@ -21,6 +21,7 @@ $(function () {
 function imageIsLoaded(e) {
     $('#icon').attr('src', e.target.result);
     $('#realIcon').attr('src', e.target.result);
+    $('#icon').css('visibility', 'visible');
 };
 
 $(function() { 
@@ -39,7 +40,7 @@ $(function() {
                 document.body.appendChild(canvas);
 
                 // Convert and download as image 
-                Canvas2Image.saveAsPNG(canvas); 
+                Canvas2Image.saveAsPNG(canvas);
                 $("#img-out").append(canvas);
                 // Clean up 
                 //document.body.removeChild(canvas);
@@ -70,7 +71,7 @@ $(function() {
 
 <br /><br />
 
-<img id='icon' class='app-icon' src='' alt='Icon image' style="max-width:300px; max-height:300px;" />
+<img id='icon' class='app-icon' src='' alt='Icon image' style="max-width:300px; max-height:300px; visibility:hidden;" />
 <img id='realIcon' class='app-icon' src='' hidden />
 
 <br /><br />
