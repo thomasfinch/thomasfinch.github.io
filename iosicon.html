@@ -52,16 +52,12 @@ function imageIsLoaded(e) {
 };
 
 $(function() { 
-    $("#downloadButton").click(function() {
-
+    $("#downloadButton").click(function(e) {
     	if ($('#icon').attr('src') === '' || $('#realIcon').attr('src') === '') {
     		alert('Please upload an image.');
+    		e.preventDefault();
     		return;
     	}
-
-    	var canvas = document.getElementById('iconCanvas');
-    	var imageURL = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-    	window.location.href = imageURL;
     });
 });
 </script>
@@ -95,6 +91,4 @@ $(function() {
 
 <br /><br />
 
-<a id='link' href='' download='RoundedIcon.png'>Download Masked Icon</a>
-
-<button id='downloadButton'>Download Masked Icon (full resolution)</button>
+<a id='link' href='' download='RoundedIcon.png'><button id='downloadButton'>Download Masked Icon</button></a>
