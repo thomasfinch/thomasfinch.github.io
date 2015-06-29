@@ -6,6 +6,8 @@ permalink: /iosicon/
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
 <script src='{{ site.url }}/resources/icongenerator/html2canvas.js'></script>
+<script src='{{ site.url }}/resources/icongenerator/canvas2image.js'></script>
+<script src='{{ site.url }}/resources/icongenerator/index.js'></script>
 <script type='text/javascript'>
 
 $(function () {
@@ -19,9 +21,29 @@ $(function () {
 });
 
 function imageIsLoaded(e) {
-    $('#icon').attr('src', e.target.result);
+	$('#icon').attr('src', e.target.result);
     $('#realIcon').attr('src', e.target.result);
     $('#icon').css('visibility', 'visible');
+
+ 	var canvas = document.getElementById('iconCanvas');
+	var ctx = canvas.getContext('2d');
+
+	rasterizeHTML.drawHTML(document.getElementById('realIcon').outerHTML, canvas);
+
+	// var imageObj = new Image();
+ //    imageObj.onload = function() {
+ //    	console.log('should have drawn image');
+ //    	console.log(canvas);
+ //    	console.log(context);
+	// 	canvas.height = 500;
+ //    	canvas.width = 500;
+ //    	context.drawImage(imageObj, 0, 0);
+ //    	console.log(canvas);
+ //    };
+
+ //    console.log(e);
+ //    console.log(e.target.result);
+ //    imageObj.src = e.target.result;
 };
 
 $(function() { 
@@ -34,26 +56,30 @@ $(function() {
     		return;
     	}
 
-        html2canvas($("#realIcon"), {
-            onrendered: function(canvas) {
-                theCanvas = canvas;
-                document.body.appendChild(canvas);
+       //  html2canvas($("#realIcon"), {
+       //      onrendered: function(canvas) {
 
-                // Convert and download as image 
-                Canvas2Image.saveAsPNG(canvas);
-                $("#img-out").append(canvas);
-                // Clean up 
-                //document.body.removeChild(canvas);
-            }
-        });
+       //      	var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+       //      	console.log(image);
+       //      	// window.location.href = image.src;
+			    // // window.open(image);
+
+       //          // theCanvas = canvas;
+       //          // document.body.appendChild(canvas);
+
+       //          // // Convert and download as image 
+       //          // Canvas2Image.saveAsPNG(canvas);
+       //          // $("#img-out").append(canvas);
+       //          // Clean up 
+       //          //document.body.removeChild(canvas);
+       //      }
+       //  });
     });
 });
 </script>
 
 <style>
 .app-icon {
-	width: 150px;
-	height: 150px;
 	background-size: 100% 100%;
 	cursor: pointer;
 	border-radius: 17.544%;
@@ -71,11 +97,12 @@ $(function() {
 
 <br /><br />
 
-<img id='icon' class='app-icon' src='' alt='Icon image' style="max-width:300px; max-height:300px; visibility:hidden;" />
-<img id='realIcon' class='app-icon' src='' hidden />
+<img id='icon' class='app-icon' src='' alt='Icon image' style='max-width:300px; max-height:300px; visibility:hidden;' />
 
 <br /><br />
 
 <button id='downloadButton'>Download Masked Icon</button>
 
-<div id="img-out"></div>
+<canvas id='iconCanvas'></canvas>
+
+<img id='realIcon' class='app-icon' src='' hidden />
