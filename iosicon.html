@@ -4,7 +4,8 @@ title: Projects
 permalink: /iosicon/
 ---
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+<script src='{{ site.url }}/resources/icongenerator/html2canvas.js'></script>
 <script type='text/javascript'>
 
 $(function () {
@@ -32,18 +33,18 @@ $(function() {
     		return;
     	}
 
-        // html2canvas($("#realIcon"), {
-        //     onrendered: function(canvas) {
-        //         theCanvas = canvas;
-        //         document.body.appendChild(canvas);
+        html2canvas($("#realIcon"), {
+            onrendered: function(canvas) {
+                theCanvas = canvas;
+                document.body.appendChild(canvas);
 
-        //         // Convert and download as image 
-        //         Canvas2Image.saveAsPNG(canvas); 
-        //         $("#img-out").append(canvas);
-        //         // Clean up 
-        //         //document.body.removeChild(canvas);
-        //     }
-        // });
+                // Convert and download as image 
+                Canvas2Image.saveAsPNG(canvas); 
+                $("#img-out").append(canvas);
+                // Clean up 
+                //document.body.removeChild(canvas);
+            }
+        });
     });
 });
 </script>
@@ -75,3 +76,5 @@ $(function() {
 <br /><br />
 
 <button id='downloadButton'>Download Masked Icon</button>
+
+<div id="img-out"></div>
