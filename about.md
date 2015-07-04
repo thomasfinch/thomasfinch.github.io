@@ -11,3 +11,7 @@ I also like to develop software in my free time, I've built some tweaks for jail
 This summer I'm interning as a software engineer at [Arbor Networks](http://www.arbornetworks.com/) in Ann Arbor, Michigan. 
 
 Feel free to contact me through email or Twitter, I'd love to talk.
+
+# this is a test line. It should be big.
+
+Now here's anothing thing: [Google](www.google.com).
