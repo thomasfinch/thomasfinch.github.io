@@ -161,7 +161,7 @@ The number is: 3
 
 ## Limitations
 
-One limitation of this method of hooking is that it requires the target function to be at least 5 bytes in size for a jump instruction to be inserted. That may seem like a silly restriction, but it's definitely possible to create functions that small (a single byte `ret` instruction, for example). I can't think of a way around this, after all it's hard to do much in a single byte. The most straightforward solution is just to not hook instructions smaller than 5 bytes.
+One limitation of this method of hooking is that it requires the target function to be at least 5 bytes in size for a jump instruction to be inserted. That may seem like a silly restriction, but it's definitely possible to create functions that small (a single byte `ret` instruction, for example). I can't think of a way around this, after all it's hard to do much in a single byte. The most straightforward solution is just to not hook functions smaller than 5 bytes.
 
 Another problem I ran into was getting this code to work on Linux. For some reason, Linux consistently loaded the dynamic library at a high address, so high that the offset overflowed the 32 bits available to it. I don't think this is fixable while still using a jump instruction, since the maximum size an offset can be is 32 bits. However, the function could be hooked using another method - for example pushing the address of the replacement function onto the stack, then jumping to it with a `ret` instruction. This would take more space than simply using a jump, but it's the only idea I have at the moment.
 
