@@ -19,9 +19,17 @@
 .app-screenshot {
 	max-height: 400px;
 	max-width: 300px;
-	height: auto;
+	height: 400px;
 	width: auto;
 	float: center;
+}
+
+.small-screenshot-img {
+	position: relative;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
 }
 
 .description {
