@@ -1,8 +1,7 @@
 # Site settings
 title: Thomas Finch
-email: tomf64@gmail.com
 description: ""
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://thomasfinch.me" # the base hostname & protocol for your site
-twitter_username: tomf64
+twitter_username: td_finch
 github_username:  thomasfinch
