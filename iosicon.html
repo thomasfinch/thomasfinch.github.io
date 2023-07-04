@@ -1,94 +1,87 @@
----
-layout: default
-title: iOS Icon Generator
-permalink: /iosicon/
----
+<html>
 
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
-<script type='text/javascript'>
+<head>
+	<title>Thomas Finch - iOS Icon Generator</title>
+	<link rel="stylesheet" href="style/main.css">
+	<link rel="stylesheet" href="style/iosicon.css">
 
-var imageWidth = 0, imageHeight = 0;
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+	<script type='text/javascript'>
 
-$(function () {
-    $(":file").change(function () {
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = imageIsLoaded;
-            reader.readAsDataURL(this.files[0]);
-        }
-    });
-});
+	var imageWidth = 0, imageHeight = 0;
 
-function imageIsLoaded(e) {
-	//Get image dimensions
-    var url = window.url || window.URL;
-    var img = new Image();
-    img.onload = function() {
-        imageWidth = this.width;
-        imageHeight = this.height;
+	$(function () {
+		$(":file").change(function () {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+				reader.onload = imageIsLoaded;
+				reader.readAsDataURL(this.files[0]);
+			}
+		});
+	});
 
-        //Set canvas and svg mask to the correct dimensions
-        document.getElementById('iconCanvas').width = imageWidth;
-        document.getElementById('iconCanvas').height = imageHeight;
-        document.getElementById('svg').width = imageWidth;
-        document.getElementById('svg').height = imageHeight;
+	function imageIsLoaded(e) {
+		//Get image dimensions
+		var url = window.url || window.URL;
+		var img = new Image();
+		img.onload = function() {
+			imageWidth = this.width;
+			imageHeight = this.height;
 
-        //Put the image data in the image views
-        $('#icon').attr('src', e.target.result);
-	    $('#realIcon').attr('src', e.target.result);
-	    $('#icon').css('visibility', 'visible');
+			// Set canvas and svg mask to the correct dimensions
+			document.getElementById('iconCanvas').width = imageWidth;
+			document.getElementById('iconCanvas').height = imageHeight;
+			document.getElementById('svg').width = imageWidth;
+			document.getElementById('svg').height = imageHeight;
 
-	    //Draw image and mask in canvas
-	 	var canvas = document.getElementById('iconCanvas');
-		var ctx = canvas.getContext('2d');
-		ctx.drawImage(document.getElementById('svg'), 0, 0, imageWidth, imageHeight);
-		ctx.globalCompositeOperation = 'source-atop';
-		ctx.drawImage(document.getElementById('realIcon'), 0, 0);
+			// Put the image data in the image views
+			$('#icon').attr('src', e.target.result);
+			$('#realIcon').attr('src', e.target.result);
+			$('#icon').css('visibility', 'visible');
 
-		var canvas = document.getElementById('iconCanvas');
-    	document.getElementById('link').href=canvas.toDataURL("image/png");
-    };
-    img.src = e.target.result;
-};
+			// Draw image and mask in canvas
+			var canvas = document.getElementById('iconCanvas');
+			var ctx = canvas.getContext('2d');
+			ctx.drawImage(document.getElementById('svg'), 0, 0, imageWidth, imageHeight);
+			ctx.globalCompositeOperation = 'source-atop';
+			ctx.drawImage(document.getElementById('realIcon'), 0, 0);
 
-$(function() { 
-    $("#downloadButton").click(function(e) {
-    	if ($('#icon').attr('src') === '' || $('#realIcon').attr('src') === '') {
-    		alert('Please upload an image.');
-    		e.preventDefault();
-    		return;
-    	}
-    });
-});
-</script>
+			var canvas = document.getElementById('iconCanvas');
+			document.getElementById('link').href=canvas.toDataURL("image/png");
+		};
+		img.src = e.target.result;
+	};
 
-<style>
-.app-icon {
-	background-size: 100% 100%;
-	cursor: pointer;
-	border-radius: 17.544%;
-	-webkit-mask-repeat: no-repeat;
-  	-webkit-mask-size: 100% 100%;
-  	-webkit-mask-image: url('{{ site.url }}/resources/icongenerator/ios7-icon.svg');
-}
-</style>
+	$(function() { 
+		$("#downloadButton").click(function(e) {
+			if ($('#icon').attr('src') === '' || $('#realIcon').attr('src') === '') {
+				alert('Please upload an image.');
+				e.preventDefault();
+				return;
+			}
+		});
+	});
+	</script>
 
-<h1>iOS 7+ Icon Generator</h1>
+</head>
 
-<p>This tool takes a square app icon and masks it to match the rounded corner shape of modern iOS icons (iOS 7 and later). It's pretty simple, but there apparently aren't good online tools for this ¯\_(ツ)_/¯</p>
+<body>
+	<h1>iOS 7+ Icon Generator</h1>
+	<p>This tool takes a square app icon and masks it to match the rounded corner shape of modern iOS icons (iOS 7 and later). It's pretty simple, but there apparently aren't good online tools for this ¯\_(ツ)_/¯</p>
 
-<input type='file' />
+	<input type='file' />
+	<br /><br />
 
-<br /><br />
+	<img id='icon' class='app-icon' src='' alt='Icon image' />
+	<img id='realIcon' class='app-icon' src='' style='display:none;' />
+	<img id='svg' src='resources/icongenerator/ios7-icon.svg' style='display:none;' />
 
-<img id='icon' class='app-icon' src='' alt='Icon image' style='max-width:300px; max-height:300px; visibility:hidden;' />
+	<canvas id='iconCanvas' width=2000 height=2000 style='display:none;' /></canvas>
 
-<img id='realIcon' class='app-icon' src='' style='display:none;' />
+	<br /><br />
 
-<img id='svg' src='{{ site.url }}/resources/icongenerator/ios7-icon.svg' style='display:none;' />
+	<a id='link' href='' download='RoundedIcon.png'><button id='downloadButton'>Download Masked Icon</button></a>
 
-<canvas id='iconCanvas' width=2000 height=2000 style='display:none;' /></canvas>
+</body>
 
-<br /><br />
-
-<a id='link' href='' download='RoundedIcon.png'><button id='downloadButton'>Download Masked Icon</button></a>
+</html>

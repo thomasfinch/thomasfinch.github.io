@@ -1,19 +1,18 @@
----
-layout: default
-title: Blog
-permalink: /blog/
----
+<html>
+<head>
+	<title>Thomas Finch - Blog</title>
+	<link rel="stylesheet" href="style/main.css">
+	<link rel="stylesheet" href="style/blog.css">
+</head>
 
-<h1>Posts</h1>
+<body>
+	<h1>Thomas Finch - Blog</h1>
 
-<ul class="post-list">
-  {% for post in site.posts %}
-    <li>
-      <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+	<a href="blog/TweakDevTips.html">iOS Tweak Development Tips - May 22, 2015</a> <br /><br />
+	<a href="blog/HookingCFunctionsAtRuntime.html">Hooking C functions at Runtime - July 24, 2015</a> <br /><br />
+	<a href="blog/ScrapingWebpagesOniOS.html">Scraping Webpages on iOS- August 10, 2015</a> <br /><br />
 
-      <h2>
-        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-      </h2>
-    </li>
-  {% endfor %}
-</ul>
+
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+---
+layout: default
+title: iOS Icon Generator
+permalink: /iosicon/
+---
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+<script type='text/javascript'>
+
+var imageWidth = 0, imageHeight = 0;
+
+$(function () {
+    $(":file").change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = imageIsLoaded;
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+});
+
+function imageIsLoaded(e) {
+	//Get image dimensions
+    var url = window.url || window.URL;
+    var img = new Image();
+    img.onload = function() {
+        imageWidth = this.width;
+        imageHeight = this.height;
+
+        //Set canvas and svg mask to the correct dimensions
+        document.getElementById('iconCanvas').width = imageWidth;
+        document.getElementById('iconCanvas').height = imageHeight;
+        document.getElementById('svg').width = imageWidth;
+        document.getElementById('svg').height = imageHeight;
+
+        //Put the image data in the image views
+        $('#icon').attr('src', e.target.result);
+	    $('#realIcon').attr('src', e.target.result);
+	    $('#icon').css('visibility', 'visible');
+
+	    //Draw image and mask in canvas
+	 	var canvas = document.getElementById('iconCanvas');
+		var ctx = canvas.getContext('2d');
+		ctx.drawImage(document.getElementById('svg'), 0, 0, imageWidth, imageHeight);
+		ctx.globalCompositeOperation = 'source-atop';
+		ctx.drawImage(document.getElementById('realIcon'), 0, 0);
+
+		var canvas = document.getElementById('iconCanvas');
+    	document.getElementById('link').href=canvas.toDataURL("image/png");
+    };
+    img.src = e.target.result;
+};
+
+$(function() { 
+    $("#downloadButton").click(function(e) {
+    	if ($('#icon').attr('src') === '' || $('#realIcon').attr('src') === '') {
+    		alert('Please upload an image.');
+    		e.preventDefault();
+    		return;
+    	}
+    });
+});
+</script>
+
+<style>
+.app-icon {
+	background-size: 100% 100%;
+	cursor: pointer;
+	border-radius: 17.544%;
+	-webkit-mask-repeat: no-repeat;
+  	-webkit-mask-size: 100% 100%;
+  	-webkit-mask-image: url('{{ site.url }}/resources/icongenerator/ios7-icon.svg');
+}
+</style>
+
+<h1>iOS 7+ Icon Generator</h1>
+
+<p>This tool takes a square app icon and masks it to match the rounded corner shape of modern iOS icons (iOS 7 and later). It's pretty simple, but there apparently aren't good online tools for this ¯\_(ツ)_/¯</p>
+
+<input type='file' />
+
+<br /><br />
+
+<img id='icon' class='app-icon' src='' alt='Icon image' style='max-width:300px; max-height:300px; visibility:hidden;' />
+
+<img id='realIcon' class='app-icon' src='' style='display:none;' />
+
+<img id='svg' src='{{ site.url }}/resources/icongenerator/ios7-icon.svg' style='display:none;' />
+
+<canvas id='iconCanvas' width=2000 height=2000 style='display:none;' /></canvas>
+
+<br /><br />
+
+<a id='link' href='' download='RoundedIcon.png'><button id='downloadButton'>Download Masked Icon</button></a>
