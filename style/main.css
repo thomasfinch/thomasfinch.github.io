@@ -1,0 +1,10 @@
+* {
+	font-family: Geneva, Tahoma, Verdana, sans-serif;
+}
+
+body {
+	width: 100%;
+	max-width: 1500px;
+	margin-left: auto;
+	margin-right: auto;
+}
