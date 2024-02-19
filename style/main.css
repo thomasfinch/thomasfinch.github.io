@@ -1,13 +1,23 @@
 * {
-	font-family: Geneva, Tahoma, Verdana, sans-serif;
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
 }
 
 body {
 	width: 100%;
 	max-width: 1500px;
-	margin-left: auto;
-	margin-right: auto;
-	padding-right: min(50px, 5%);
-	padding-left: min(50px, 5%);
+	margin: 0;
+	padding-right: max(50px, 8%);
+	padding-left: max(50px, 8%);
 	padding-top: min(50px, 5%);
+}
+
+@media only screen and (max-device-width: 600px) {
+	body {
+		width: 100%;
+		max-width: 100%;
+		overflow: hidden;
+		overflow-x: hidden;
+		font-size:4vw
+	}
 }
